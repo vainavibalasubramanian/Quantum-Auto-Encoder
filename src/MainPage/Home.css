@@ -1,35 +1,35 @@
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: #f7f9fb;
-  text-align: center;
-  font-family: 'Segoe UI', sans-serif;
-  background-image: url('E:\\QAE-GIT\\Quantum-Auto-Encoder\\src\\MainPage\\bg_qae_fe.jpg'); /* Replace with your image path */
-  background-size: cover; /* Ensures the image covers the whole area */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents repeating */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f7f9fb;
+    text-align: center;
+    font-family: "Segoe UI", sans-serif;
+    background-image: url("/public/bg_qae_fe.jpg");
+    background-size: cover; /* Ensures the image covers the whole area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
 }
 
 .button-container {
-  margin-right: 600px;
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 2rem;
+    margin-right: 600px;
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .nav-button {
-  padding: 12px 24px;
-  background-color: #007bff;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
 }
 
 .nav-button:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
