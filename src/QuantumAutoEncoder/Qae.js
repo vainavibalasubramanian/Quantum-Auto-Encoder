@@ -1,20 +1,19 @@
 import { useState } from "react";
-import "./First.css";
 
-function First() {
+function Qae() {
   const [formData, setFormData] = useState({
-    src_bytes: "",
-    dst_bytes: "",
-    count: "",
-    srv_count: "",
-    same_srv_rate: "",
-    diff_srv_rate: "",
-    dst_host_srv_count: "",
-    dst_host_same_srv_rate: "",
-    dst_host_diff_srv_rate: "",
-    dst_host_same_src_port_rate: "",
-    dst_host_srv_diff_host_rate: "",
-    dst_host_srv_serror_rate: "",
+    src_bytes: 0,
+    dst_bytes: 0,
+    logged_in: 0,
+    count: 0,
+    srv_count: 0,
+    same_srv_rate: 0,
+    diff_srv_rate: 0,
+    dst_host_srv_count: 0,
+    dst_host_same_srv_rate: 0,
+    dst_host_diff_srv_rate: 0,
+    dst_host_same_src_port_rate: 0,
+    dst_host_serror_rate: 0,
     protocol_type: "tcp",
     service: "http",
     flag: "SF"
@@ -26,6 +25,7 @@ function First() {
   const fieldLabels = {
     src_bytes: "Source Bytes",
     dst_bytes: "Destination Bytes",
+    logged_in: "Logged In (0 or 1)",
     count: "Connection Count",
     srv_count: "Service Count",
     same_srv_rate: "Same Service Rate",
@@ -34,12 +34,18 @@ function First() {
     dst_host_same_srv_rate: "Destination Host Same Service Rate",
     dst_host_diff_srv_rate: "Destination Host Different Service Rate",
     dst_host_same_src_port_rate: "Destination Host Same Source Port Rate",
-    dst_host_srv_diff_host_rate: "Destination Host Service Different Host Rate",
-    dst_host_srv_serror_rate: "Destination Host Service Serror Rate"
+    dst_host_serror_rate: "Destination Host Serror Rate"
   };
 
   // Handle input changes
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: parseFloat(value),
+    }));
+  };
+  const handleStringChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -49,13 +55,19 @@ function First() {
 
   // Send data to backend
   const getPrediction = async () => {
-    const response = await fetch("http://localhost:5000/predict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
-    const data = await response.json();
-    setPrediction(data.prediction);
+    try {
+      const response = await fetch("http://localhost:8000/qe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      setPrediction(data.prediction);
+    } catch (error) {
+      console.error("Error fetching prediction:", error);
+      setPrediction("Error connecting to backend");
+    }
   };
 
   return (
@@ -81,7 +93,7 @@ function First() {
         {/* Dropdowns */}
         <div className="form-group">
           <label>Protocol Type</label>
-          <select name="protocol_type" value={formData.protocol_type} onChange={handleChange}>
+          <select name="protocol_type" value={formData.protocol_type} onChange={handleStringChange}>
             <option value="tcp">TCP</option>
             <option value="udp">UDP</option>
             <option value="icmp">ICMP</option>
@@ -90,7 +102,7 @@ function First() {
 
         <div className="form-group">
           <label>Service</label>
-          <select name="service" value={formData.service} onChange={handleChange}>
+          <select name="service" value={formData.service} onChange={handleStringChange}>
             <option value="http">HTTP</option>
             <option value="ftp_data">FTP Data</option>
             <option value="smtp">SMTP</option>
@@ -100,13 +112,14 @@ function First() {
             <option value="imap4">IMAP4</option>
             <option value="domain">Domain</option>
             <option value="http_443">HTTPS</option>
+            <option value="private">Private</option>
             <option value="other">Other</option>
           </select>
         </div>
 
         <div className="form-group">
           <label>Flag</label>
-          <select name="flag" value={formData.flag} onChange={handleChange}>
+          <select name="flag" value={formData.flag} onChange={handleStringChange}>
             <option value="SF">SF</option>
             <option value="S0">S0</option>
             <option value="REJ">REJ</option>
@@ -121,7 +134,7 @@ function First() {
           </select>
         </div>
 
-        <button type="button" className="predict-btn" onClick={getPrediction}>
+        <button type="button" className="predict-btn" onClick={()=>{getPrediction()}}>
           Get Prediction
         </button>
       </form>
@@ -131,4 +144,4 @@ function First() {
   );
 }
 
-export default First;
+export default Qae;
