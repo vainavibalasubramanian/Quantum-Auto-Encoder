@@ -7,9 +7,14 @@
   background: #f7f9fb;
   text-align: center;
   font-family: 'Segoe UI', sans-serif;
+  background-image: url('E:\\QAE-GIT\\Quantum-Auto-Encoder\\src\\MainPage\\bg_qae_fe.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensures the image covers the whole area */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents repeating */
 }
 
 .button-container {
+  margin-right: 600px;
   display: flex;
   gap: 1.5rem;
   margin-top: 2rem;
